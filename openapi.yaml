@@ -1,0 +1,104 @@
+openapi: '3.1.0'
+info:
+  title: Payment Service (Stripe, Manual Capture)
+  version: '1.0.0'
+servers:
+  - url: http://localhost:8080
+paths:
+  /health:
+    get:
+      summary: Healthcheck
+      responses:
+        '200': { description: ok }
+  /v1/payments:
+    post:
+      summary: Create & Authorize (manual capture)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePayment'
+      responses:
+        '201':
+          description: Created & Authorized
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Payment' }
+        '422': { description: Validation/Business error }
+  /v1/payments/{id}:
+    get:
+      summary: Get payment
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Payment
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Payment' }
+        '404': { description: Not found }
+  /v1/payments/{id}/capture:
+    post:
+      summary: Capture authorized funds
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Captured
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Payment' }
+        '422': { description: Business error }
+  /v1/payments/{id}/cancel:
+    post:
+      summary: Cancel authorization
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Canceled
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Payment' }
+        '422': { description: Business error }
+  /v1/webhooks/stripe:
+    post:
+      summary: Stripe webhook (signed)
+      responses:
+        '200': { description: received }
+components:
+  schemas:
+    CreatePayment:
+      type: object
+      required: [amount, currency, email]
+      properties:
+        amount:
+          { type: integer, example: 5500, minimum: 1, description: 'centavos' }
+        currency: { type: string, example: brl, minLength: 3, maxLength: 3 }
+        email: { type: string, example: cliente@example.com }
+    Payment:
+      type: object
+      properties:
+        id: { type: string }
+        amount: { type: integer }
+        currency: { type: string }
+        email: { type: string }
+        status:
+          {
+            type: string,
+            enum: [created, authorized, captured, canceled, failed, refunded],
+          }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+        stripe_payment_intent_id: { type: string }
+        client_secret: { type: string, description: 'apenas para testes' }
