@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "d67049fe-2da0-464b-a8a4-1e45f407c757",
+		"name": "golang-payment-stripe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29355836"
+	},
+	"item": [
+		{
+			"name": "/payments",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"amount\": 5500,\n  \"currency\": \"brl\",\n  \"email\": \"williamkoller30@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/payments/:id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"amount\": 5500,\n  \"currency\": \"brl\",\n  \"email\": \"williamkoller30@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/payments/01K3H9QNVKEXRPBPWHCBD5QKQK",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"payments",
+						"01K3H9QNVKEXRPBPWHCBD5QKQK"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/payments/:id/capture",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"amount\": 5500,\n  \"currency\": \"brl\",\n  \"email\": \"williamkoller30@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/payments/01K3H9QNVKEXRPBPWHCBD5QKQK/capture",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"payments",
+						"01K3H9QNVKEXRPBPWHCBD5QKQK",
+						"capture"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/webhook/stripe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Stripe-Signature",
+						"value": "evt_3S05eX1ucwxmOdoi0aoyJpfq",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/v1/webhooks/stripe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"webhooks",
+						"stripe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/webhook/stripe/test",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/webhooks/stripe/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"webhooks",
+						"stripe",
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
