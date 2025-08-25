@@ -27,7 +27,7 @@ func Build(
 	zl *zap.Logger,
 	cfg *config.Config,
 	svc *service.PaymentService,
-	sv StripeVerifier, // 👈 agora explicitamente com stripe-go/v76.Event
+	sv StripeVerifier,
 	repo PaymentRepo,
 ) *gin.Engine {
 
@@ -45,10 +45,7 @@ func Build(
 		middleware.GinZapLogger(zl),
 	)
 
-	// Health & docs
 	r.GET("/health", func(c *gin.Context) { c.JSON(http.StatusOK, gin.H{"status": "ok"}) })
-	r.StaticFile("/openapi.yaml", "./openapi.yaml")
-	r.GET("/", func(c *gin.Context) { c.JSON(http.StatusOK, gin.H{"message": "paymentsvc", "docs": "/openapi.yaml"}) })
 
 	// Payments
 	ph := handlers.NewPaymentHandler(svc)
@@ -60,6 +57,11 @@ func Build(
 	// Webhook Stripe
 	wh := webhook.NewStripeWebhook(zl, sv, repo)
 	r.POST("/v1/webhooks/stripe", wh.Handle)
+
+	// Endpoint de teste para webhook (remover em produção)
+	if cfg.Env != "prod" {
+		r.POST("/v1/webhooks/stripe/test", wh.HandleTest)
+	}
 
 	return r
 }

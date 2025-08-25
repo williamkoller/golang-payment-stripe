@@ -43,7 +43,7 @@ func (s *PaymentSaga) Authorize(ctx context.Context, p *payment.Payment) (*payme
 	if p.Amount >= 10_000_000 {
 		p.MarkFailed()
 		_ = s.repo.Update(p)
-		return nil, errors.New("risk? amount too high")
+		return nil, errors.New("risk: amount too high")
 	}
 
 	idem := fmt.Sprintf("auth-%s", p.ID)

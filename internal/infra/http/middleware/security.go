@@ -31,6 +31,10 @@ func SecurityHeaders() gin.HandlerFunc {
 		c.Writer.Header().Set("Referrer-Policy", "no-referrer")
 		c.Writer.Header().Set("Content-Security-Policy", "default-src 'none'")
 		c.Writer.Header().Set("X-DNS-Prefetch-Control", "off")
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 		c.Next()
 	}
 }

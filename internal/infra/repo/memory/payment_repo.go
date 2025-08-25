@@ -11,7 +11,7 @@ import (
 type PaymentRepo struct {
 	mu   sync.RWMutex
 	byID map[string]*payment.Payment
-	byPI map[string]string // piID -> paymentID
+	byPI map[string]string
 }
 
 func NewPaymentRepo() *PaymentRepo {

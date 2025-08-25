@@ -53,10 +53,9 @@ func (c *client) AuthorizeManual(ctx context.Context, idemKey string, amount int
 		}
 
 		if useTest {
-			params.PaymentMethod = stripe.String(testPM) // exemplo: pm_card_visa
+			params.PaymentMethod = stripe.String(testPM)
 		}
 
-		// ✅ idempotency key vai no params
 		params.SetIdempotencyKey(idemKey)
 
 		return paymentintent.New(params)
@@ -94,6 +93,7 @@ func (c *client) VerifyWebhookSignature(payload []byte, sigHeader string) (strip
 	if c.cfg.StripeWebhookSecret == "" {
 		return stripe.Event{}, errors.New("webhook signing secret not configured")
 	}
+
 	return webhook.ConstructEvent(payload, sigHeader, c.cfg.StripeWebhookSecret)
 }
 

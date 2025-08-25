@@ -73,3 +73,14 @@ func (h *Handler) Handle(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"received": true})
 }
+
+func (h *Handler) HandleTest(c *gin.Context) {
+	body, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
+
+	h.zl.Info("webhook_test_received", zap.String("body", string(body)))
+	c.JSON(http.StatusOK, gin.H{"received": true, "test": true})
+}
