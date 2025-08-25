@@ -323,24 +323,6 @@ go test -v ./...
    - Ajuste `RATE_LIMIT_RPS` e `RATE_LIMIT_BURST`
    - Implemente retry com backoff no cliente
 
-## 📝 Contribuição
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -am 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-## 🤝 Suporte
-
-- **Issues**: [GitHub Issues](https://github.com/williamkoller/golang-payment-stripe/issues)
-- **Documentação**: [Stripe API Docs](https://stripe.com/docs/api)
-- **Email**: williamkoller@example.com
-
 ---
 
 Desenvolvido com ❤️ por [William Koller](https://github.com/williamkoller)
